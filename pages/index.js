@@ -1,50 +1,49 @@
-
-import { useState } from 'react';
-import { format } from 'date-fns';
-
-export default function Home() {
-  const [homeAirport, setHomeAirport] = useState('');
-  const [destination, setDestination] = useState('');
-  const [departDate, setDepartDate] = useState('');
-  const [returnDate, setReturnDate] = useState('');
-  const [results, setResults] = useState([]);
-
-  const handleSearch = () => {
-    const mockResults = [
-      {
-        summary: `${homeAirport} → FCO → ${destination}`,
-        legs: [`${homeAirport} → FCO`, `FCO → ${destination}`],
-        wait_time: '3h 20m',
-        total_price: '220 GBP'
-      },
-      {
-        summary: `${homeAirport} → IST → ${destination}`,
-        legs: [`${homeAirport} → IST`, `IST → ${destination}`],
-        wait_time: '2h 45m',
-        total_price: '198 GBP'
-      }
-    ];
-    setResults(mockResults);
-  };
-
+export default function HomePage() {
   return (
-    <div style={{ fontFamily: 'Arial', padding: 20 }}>
-      <img src="/logo.png" alt="CheapLeaps Logo" style={{ width: 120, marginBottom: 20, cursor: 'pointer' }} onClick={() => window.location.href = '/'} />
-      <h1>CheapLeaps</h1>
-      <input placeholder="From (e.g. LON)" value={homeAirport} onChange={e => setHomeAirport(e.target.value)} />
-      <input placeholder="To (e.g. JED)" value={destination} onChange={e => setDestination(e.target.value)} />
-      <input type="date" value={departDate} onChange={e => setDepartDate(e.target.value)} />
-      <input type="date" value={returnDate} onChange={e => setReturnDate(e.target.value)} />
-      <button onClick={handleSearch}>Find Flights</button>
-      {results.map((r, i) => (
-        <div key={i} style={{ marginTop: 10, background: '#eef', padding: 10 }}>
-          <b>{r.summary}</b>
-          <div>Legs: {r.legs.join(', ')}</div>
-          <div>Wait Time: {r.wait_time}</div>
-          <div>Total Price: {r.total_price}</div>
-          <button style={{ marginTop: 5 }}>Book Now</button>
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-600 to-purple-600 p-6">
+      <div className="max-w-lg w-full bg-white rounded-xl shadow-lg p-6">
+        <div className="flex items-center justify-center mb-6">
+          <img src="/logo.png" alt="CheapLeaps Logo" className="h-14 mr-2" />
+          <h1 className="text-3xl font-bold text-blue-900">CheapLeaps</h1>
         </div>
-      ))}
+
+        <div className="flex justify-around mb-4 text-blue-900 font-medium">
+          <button className="border-b-2 border-blue-900 pb-1">Round Trip</button>
+          <button className="pb-1">One Way</button>
+        </div>
+
+        <form className="space-y-4">
+          <div>
+            <label className="text-sm font-medium">Depart From</label>
+            <input type="text" placeholder="London, GB" className="w-full border border-gray-300 rounded p-2 mt-1" />
+          </div>
+          <div>
+            <label className="text-sm font-medium">Your Destination</label>
+            <input type="text" placeholder="Narita International (NRT)" className="w-full border border-gray-300 rounded p-2 mt-1" />
+          </div>
+          <div className="flex space-x-4">
+            <div className="w-1/2">
+              <label className="text-sm font-medium">Depart Date</label>
+              <input type="date" className="w-full border border-gray-300 rounded p-2 mt-1" />
+            </div>
+            <div className="w-1/2">
+              <label className="text-sm font-medium">Return Date</label>
+              <input type="date" className="w-full border border-gray-300 rounded p-2 mt-1" />
+            </div>
+          </div>
+          <div>
+            <label className="text-sm font-medium">1 Traveler</label>
+            <select className="w-full border border-gray-300 rounded p-2 mt-1">
+              <option>1 Traveler</option>
+              <option>2 Travelers</option>
+              <option>3 Travelers</option>
+            </select>
+          </div>
+          <button type="submit" className="w-full bg-green-500 text-white rounded p-3 font-semibold mt-2 hover:bg-green-600">
+            Find Flights
+          </button>
+        </form>
+      </div>
     </div>
   );
 }
